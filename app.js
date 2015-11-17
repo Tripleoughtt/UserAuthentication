@@ -1,19 +1,18 @@
 'use strict';
 
 var PORT = process.env.PORT || 3000;
-
+require('dotenv').load();
 var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var morgan = require('morgan');
-
-var mongoUrl = process.env.MONGOLAB_URI || 'mongodb://localhost/userauth';
-
 var mongoose = require('mongoose');
-mongoose.connect(mongoUrl, function(err){
-  if(err) return console.log('Error connecting to Mongodb:', err);
-  console.log('Connected to MongoDB:', mongoUrl);
-});
+
+mongoose.connect("mongodb://"+ process.env.DB_USER + ":" + process.env.DB_PASS + "@ds051980.mongolab.com:51980/messageboard")
+// mongoose.connect(mongoUrl, function(err){
+//   if(err) return console.log('Error connecting to Mongodb:', err);
+//   console.log('Connected to MongoDB:', mongoUrl);
+// });
 
 var app = express();
 
@@ -30,6 +29,7 @@ app.use(express.static('public'));
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
 app.use('/turtles', require('./routes/turtles'));
+
 
 // 404 HANDLER
 app.use(function(req, res){

@@ -8,8 +8,19 @@ var User;
 
 var userSchema = Schema({
   username: { type: String, required: true, unique: true },
-  password: { type: String, required: true }
+  password: { type: String, required: true },
+  name: String,
+  email: String,
+  picture: String
 });
+
+userSchema.statics.edit = function(edits, cb){
+  User.findByIdAndUpdate(edits.cookies.userId, {$set: {email: edits.body.email, name: edits.body.name, picture: edits.body.picture}}, function(err, userToEdit){
+    console.log(edits.cookies.userId)
+    cb(err, userToEdit);
+  });
+// User.update({_id: edits.userId, username: edits.username}, {})
+}
 
 userSchema.statics.register = function(user, cb) {
   var username = user.username;

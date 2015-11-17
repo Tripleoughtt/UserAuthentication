@@ -1,0 +1,39 @@
+extends ./layout
+
+block css
+
+block content  
+    .col-lg-6.col-sm-6
+      .card.hovercard
+        .card-background
+          unless data== undefined
+            img.card-bkimg(alt='', src= data.picture)
+        .card-info
+          span.card-title 
+      .btn-pref.btn-group.btn-group-justified.btn-group-lg(role='group', aria-label='...')
+        .btn-group(role='group')
+          button#stars.btn.btn-primary(type='button', href='#tab1', data-toggle='tab')
+            span.glyphicon.glyphicon-star(aria-hidden='true')
+            .hidden-xs Yo Info
+        .btn-group(role='group')
+          button#favorites.btn.btn-default(type='button', href='#tab2', data-toggle='tab')
+            span.glyphicon.glyphicon-heart(aria-hidden='true')
+            .hidden-xs Edit Yo Crap
+      .well
+        .tab-content
+          #tab1.tab-pane.fade.in.active
+            h3 Your Info
+            unless data == undefined
+              unless data.name == undefined
+                h3= data.name
+            unless data == undefined
+              unless data.email == undefined
+                h3= data.email
+          #tab2.tab-pane.fade.in
+            h3 Edit Your Info
+            input.editName(type="text", placeholder="Insert New Name Here!")            
+            input.editEmail(type="text", placeholder="Insert New Email Here!")
+            input.editPic(type="text", placeholder="Insert Picture URL Here!")
+            button.btn.btn-md.btn-warning.edit Save Edits!
+block js
+  script(src="js/profile.js")
